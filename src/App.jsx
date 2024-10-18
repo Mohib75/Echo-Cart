@@ -15,8 +15,6 @@ const App = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [loading, setLoading] = useState(true) // Loading state
 
-	// const modalRef = useRef(null)
-
 	// Fetch products on page load
 	useEffect(() => {
 		fetch("https://dummyjson.com/products")
@@ -59,14 +57,14 @@ const App = () => {
 		let filtered = products
 
 		if (categoryFilter !== "All") {
-			filtered = filtered.filter((p) => p?.category === categoryFilter)
+			filtered = filtered?.filter((p) => p?.category === categoryFilter)
 		}
 
 		if (searchTerm) {
-			filtered = filtered.filter((p) => p?.title.toLowerCase().includes(searchTerm.toLowerCase()))
+			filtered = filtered?.filter((p) => p?.title.toLowerCase().includes(searchTerm.toLowerCase()))
 		}
 
-		filtered.sort((a, b) => {
+		filtered?.sort((a, b) => {
 			if (sortBy === "price") return a.price - b.price
 			if (sortBy === "rating") return b.rating - a.rating
 			return a.title.localeCompare(b.title)
@@ -81,15 +79,15 @@ const App = () => {
 
 	const handleAddOrUpdate = (product) => {
 		const updatedProducts = editProduct
-			? products.map((p) => (p.id === product.id ? product : p))
-			: [...products, { ...product, id: products.length + 1 }]
+			? products?.map((p) => (p?.id === product?.id ? product : p))
+			: [...products, { ...product, id: products?.length + 1 }]
 
 		setProducts(updatedProducts)
 		setEditProduct(null)
 	}
 
 	const handleDelete = (id) => {
-		const updatedProducts = products.filter((p) => p.id !== id)
+		const updatedProducts = products?.filter((p) => p?.id !== id)
 		setProducts(updatedProducts)
 	}
 
@@ -99,7 +97,7 @@ const App = () => {
 	}
 
 	const handleSave = (updatedProduct) => {
-		const updatedProducts = products.map((p) => (p.id === updatedProduct.id ? updatedProduct : p))
+		const updatedProducts = products?.map((p) => (p?.id === updatedProduct?.id ? updatedProduct : p))
 		setProducts(updatedProducts)
 		setIsModalOpen(false)
 		setEditProduct(null)
@@ -117,6 +115,7 @@ const App = () => {
 				<ProductForm onSubmit={handleAddOrUpdate} initialProduct={editProduct} submitTitle='Add' />
 			</div>
 
+			{/* Search & Filter */}
 			<div className='flex flex-col sm:flex-row items-center justify-center gap-12 my-8'>
 				<SearchBox searchTerm={searchTerm} handleSearch={handleSearch} />
 				<FIlterBox
@@ -137,6 +136,7 @@ const App = () => {
 				<ProductList products={getDisplayedProducts()} onDelete={handleDelete} onUpdate={handleUpdate} />
 			)}
 
+			{/* Modal */}
 			{isModalOpen && (
 				<div className='fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center'>
 					<div className='bg-white p-2 sm:p-6 rounded shadow-lg w-full sm:w-1/2 relative'>

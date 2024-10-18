@@ -5,7 +5,7 @@ const FIlterBox = ({ categoryFilter, handleCategoryChange, categories, sortBy, h
 		<div className='flex gap-4 items-center'>
 			<select value={categoryFilter} onChange={handleCategoryChange} className='border rounded p-2 outline-none'>
 				<option value='All'>All Categories</option>
-				{categories.map((category) => (
+				{categories?.map((category) => (
 					<option key={category} value={category}>
 						{category}
 					</option>

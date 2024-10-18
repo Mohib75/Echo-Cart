@@ -6,11 +6,11 @@ const ProductList = ({ products, onDelete, onUpdate }) => {
 
 	// Show products one-by-one based on the index
 	useEffect(() => {
-		const timers = products.map(
+		const timers = products?.map(
 			(_, index) =>
 				setTimeout(() => {
 					setVisibleCards((prev) => [...prev, index])
-				}, index * 700) // 300ms delay between each card
+				}, index * 700) // 700ms delay between each card
 		)
 
 		// Cleanup on unmount to avoid memory leaks
@@ -25,7 +25,7 @@ const ProductList = ({ products, onDelete, onUpdate }) => {
 					product={product}
 					onDelete={onDelete}
 					onUpdate={onUpdate}
-					isVisible={visibleCards.includes(index)} // Control visibility
+					isVisible={visibleCards?.includes(index)} // Control visibility
 				/>
 			))}
 		</div>
